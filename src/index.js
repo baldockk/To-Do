@@ -1,6 +1,7 @@
 import "./styles.css";
 
-class Plan {
+/*Creates a task object for adding to each individual project*/
+class Task {
     constructor(title, description, dueDate, priority) {
         this.title = title;
         this.description = description;
@@ -9,7 +10,24 @@ class Plan {
     }
 }
 
-export default Plan;
+/*Creates the project with a given name*/
+class Project {
+    constructor(name) {
+        this.name = name;
+        //An array for storing all of the tasks related to the project
+        this.tasksArray = [];
+    }
+
+    setTask(task) {
+        this.tasksArray.push(task);
+    }
+
+    getTaskArray() {
+        return this.tasksArray;
+    }
+}
+
+export default Task;
 
 /*Add button listener for when the user clicks to add a new project and appends the name of the project in the DOM as a new DIV*/
 const addButton = document.getElementById("add");
