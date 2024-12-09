@@ -4,11 +4,18 @@
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+body, html {
+    height: 100vh;
+    width: 100vw;
+}
+
 h1 {
     padding-left: 65%;
     margin: 20px;
     background-color: black;
     color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 #flex-cont {
@@ -27,8 +34,7 @@ h1 {
     gap: 15px;
 }
 
-#all, #weekly, 
-    #monthly, #completed {
+.file {
         display: block;
         width: 90%;
         justify-self: center;
@@ -43,23 +49,11 @@ h1 {
     background-color: black;
 }
 
-#weekly {
-    background-color: red;
-}
-
-#monthly {
-    background-color: orange;
-}
-
-#completed {
-    background-color: green;
-}
-
 h2 {
     text-align: center;
 }
 
-#createTask {
+#createProject {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -67,10 +61,37 @@ h2 {
     background-color: brown;
     align-items: center;
     padding: 5px;
+    color: white;
 }
 
-#tasks {
+#createProject button {
+    width: 80%;
+    height: 5%;
+    font-size: 24px;
+    font-weight: bolder;
+}
+
+#content {
     background-color: black;
     height: 100vh;
     width: 100vw;
+}
+
+#project {
+    display: none;
+    flex-direction: column;
+    width: 50vw;
+    height: 50vh;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    position: absolute; 
+    top: 25%;
+    left: 25%;
+    gap: 20px;
+}
+
+#projectName {
+    align-items: flex-start;
+    width: 50%;
 }
