@@ -104,3 +104,28 @@ h2 {
 .addTask {
     display: none;
 }
+
+#task {
+    display: none;
+    flex-direction: column;
+    width: 50vw;
+    height: 70vh;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    position: absolute; 
+    top: 15%;
+    left: 30%;
+    gap: 10px;
+    overflow: scroll;
+}
+
+#priority {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+#taskTitle {
+    width: 60%;
+}

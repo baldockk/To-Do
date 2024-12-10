@@ -26,18 +26,21 @@
             </textarea>
 
             <label for="date">Date Due:</label>
-            <input type="date" id="date" name="Date">
+            <input type="date" id="date" name="Date" required>
 
             <label>Priority</label>
-            <label for="high">High</label>
-            <input type="radio" id="high" value="high" name="Priority">
+            <div id="priority">
+                <label for="high">High</label>
+                <input type="radio" id="high" value="high" name="Priority">
 
-            <label for="medium">Medium</label>
-            <input type="radio" id="medium" value="medium" name="Priority">
+                <label for="medium">Medium</label>
+                <input type="radio" id="medium" value="medium" name="Priority">
 
-            <label for="low">Low</label>
-            <input type="radio" id="low" value="low" name="Priority">
+                <label for="low">Low</label>
+                <input type="radio" id="low" value="low" name="Priority">
+            </div>
 
+            <button type="submit" id="submitTask">Add Task To Project</button>
         </form>
 
         <div id="nav-panel">

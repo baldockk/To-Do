@@ -124,7 +124,16 @@ projectFormSubmit.addEventListener("click", e => {
 
 /*Add a button listener for when the user clicks to add a new task booting up a form for input*/
 const addTaskButton = document.getElementById("addTask");
+const taskForm = document.getElementById("task");
 addTaskButton.addEventListener("click", () => {
-
+    taskForm.style.display = "flex";
 });
+
+const addTaskSubmit = document.getElementById("submitTask");
+addTaskSubmit.addEventListener("click", e => {
+    e.preventDefault();
+    taskForm.style.display = "none";
+
+    //Get the form inputs to create a new task object
+})
 
