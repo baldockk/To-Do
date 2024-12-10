@@ -1,5 +1,11 @@
 import "./styles.css";
 
+//Array for holding all of the projects
+const projects = [];
+//Global variable to track the currently selected project
+let selectedProjectIndex = null;
+
+
 /*Creates a task object for adding to each individual project*/
 class Task {
     constructor(title, description, dueDate, priority) {
@@ -34,13 +40,11 @@ class Task {
 
 /*Creates the project with a given name*/
 class Project {
-    static projectCount = 0;
     constructor(name) {
         this.name = name;
         //An array for storing all of the tasks related to the project
         this.tasksArray = [];
-        Project.projectCount++;
-        this.projectCount = Project.projectCount;
+        Project.projectIndex++;
     }
 
     /*Write a task to a specific project*/
@@ -53,11 +57,6 @@ class Project {
         return this.tasksArray;
     }
 
-    /*Gets the project number. Important to track the projects for deletion*/
-    getProjectNum() {
-        return this.projectCount;
-    }
-
     /*Manipulates the DOM to show the particular project*/
     displayProject() {
         //Get the navigational panel so we can add a button for accessing the project
@@ -68,27 +67,36 @@ class Project {
 
         const taskDiv = document.getElementById("content");
 
-        projectButton.addEventListener("click", () => {     
+        projectButton.addEventListener("click", () => {    
+            //Set the global variable to the index of this project
+            selectedProjectIndex = projects.indexOf(this);
+            
              //Make the add task button visible
             const addTaskHeader = document.getElementsByClassName("addTask")[0];
             const addTaskButton = document.getElementsByClassName("addTask")[1];
             addTaskHeader.style.display = "block";
             addTaskButton.style.display = "block";
+
+            //clears the div and displays the title
             this.clearTaskContainer(taskDiv);
-            //Add the name of the project to the top of the tasks for clarity
-            const projectTitle = document.createElement("h2");
-            projectTitle.classList.add("projectTitle");
-            projectTitle.textContent = this.name;
-            taskDiv.appendChild(projectTitle);
             this.displayTasks(taskDiv);
         });
 
         nav.appendChild(projectButton);
     }
 
+    displayTitle(taskDiv) {
+        //Add the name of the project to the top of the tasks for clarity
+        const projectTitle = document.createElement("h2");
+        projectTitle.classList.add("projectTitle");
+        projectTitle.textContent = this.name;
+        taskDiv.appendChild(projectTitle);
+    }
+
     /*Clear the project task bar html for displaying this array of tasks*/
     clearTaskContainer(div) {
         div.innerHTML = "";
+        this.displayTitle(div);
     }
 
     /*Displays the tasks to the content div by first building the task DOM element*/
@@ -119,6 +127,7 @@ projectFormSubmit.addEventListener("click", e => {
     let projectName = document.getElementById("projectName").value;
     let project = new Project(projectName);
     project.displayProject();
+    projects.push(project);
 });
 
 /*Add a button listener for when the user clicks to add a new task booting up a form for input*/
@@ -141,6 +150,16 @@ addTaskSubmit.addEventListener("click", e => {
 
     let task = new Task(title, description, date, priority);
     
+    //Add the task to the currently selected project
+    if (selectedProjectIndex !== null) {
+        const selectedProject = projects[selectedProjectIndex];
+        selectedProject.setTask(task);
 
-})
-
+        //Update the tasks displayed in the DOM
+        const taskDiv = document.getElementById("content");
+        selectedProject.clearTaskContainer(taskDiv);
+        selectedProject.displayTasks(taskDiv);
+    } else {
+        console.error("No project selected!");
+    }
+});
