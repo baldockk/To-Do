@@ -163,3 +163,13 @@ addTaskSubmit.addEventListener("click", e => {
         console.error("No project selected!");
     }
 });
+
+/* 
+Functionality still to implement:
+
+1. Remove tasks from the project using button on div
+2. Remove an entire project? Not sure if I will inplement this yet.
+3. Edit to-do details using button on the div
+4. Change color of divs to match the priority: RED = High; YELLOW = Medium; GREEN = low;
+4. Use web storage API to allow the user to save this
+*/
