@@ -34,7 +34,7 @@ h1 {
     gap: 15px;
 }
 
-.file {
+.nav-button {
         display: block;
         width: 90%;
         justify-self: center;
@@ -45,8 +45,9 @@ h1 {
         font-weight: bold;
     }
 
-#all {
+.nav-button {
     background-color: black;
+    align-self: center;
 }
 
 h2 {
@@ -94,4 +95,8 @@ h2 {
 #projectName {
     align-items: flex-start;
     width: 50%;
+}
+
+.projectTitle {
+    color: white;
 }

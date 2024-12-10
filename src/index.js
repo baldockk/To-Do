@@ -8,35 +8,110 @@ class Task {
         this.dueDate = dueDate;
         this.priority = priority;
     }
+
+    /*Creates the div which contains all of the task content and returns it to the project*/
+    buildTaskDiv() {
+        const newDiv = document.createElement("div");
+        newDiv.classList.add("contentDiv");
+        const title = document.createElement("h3");
+        const description = document.createElement("p");
+        const dueDate = document.createElement("p");
+        const priority = document.createElement("h4");
+
+        title.textContent = this.title;
+        description.textContent = this.description;
+        dueDate.textContent = this.dueDate;
+        priority.textContent = this.priority;
+
+        newDiv.appendChild(title);
+        newDiv.appendChild(description);
+        newDiv.appendChild(dueDate);
+        newDiv.appendChild(priority);
+
+        return newDiv;
+    }
 }
 
 /*Creates the project with a given name*/
 class Project {
+    static projectCount = 0;
     constructor(name) {
         this.name = name;
         //An array for storing all of the tasks related to the project
         this.tasksArray = [];
+        Project.projectCount++;
+        this.projectCount = Project.projectCount;
     }
 
+    /*Write a task to a specific project*/
     setTask(task) {
         this.tasksArray.push(task);
     }
 
+    /*Get the array of tasks for the selected project*/
     getTaskArray() {
         return this.tasksArray;
     }
+
+    /*Gets the project number. Important to track the projects for deletion*/
+    getProjectNum() {
+        return this.projectCount;
+    }
+
+    /*Manipulates the DOM to show the particular project*/
+    displayProject() {
+        //Get the navigational panel so we can add a button for accessing the project
+        const nav = document.getElementById("nav-panel");
+        const projectButton = document.createElement("button");
+        projectButton.classList.add("nav-button");
+        projectButton.textContent = this.name;
+
+        const taskDiv = document.getElementById("content");
+
+        projectButton.addEventListener("click", () => {
+            this.clearTaskContainer(taskDiv);
+            //Add the name of the project to the top of the tasks for clarity
+            const projectTitle = document.createElement("h2");
+            projectTitle.classList.add("projectTitle");
+            projectTitle.textContent = this.name;
+            taskDiv.appendChild(projectTitle);
+            this.displayTasks(taskDiv);
+        });
+
+        nav.appendChild(projectButton);
+    }
+
+    /*Clear the project task bar html for displaying this array of tasks*/
+    clearTaskContainer(div) {
+        div.innerHTML = "";
+    }
+
+    /*Displays the tasks to the content div by first building the task DOM element*/
+    displayTasks(div) {
+        for(let i = 0; i < this.tasksArray.length; i++){
+            const builtDiv = this.tasksArray[i].buildTaskDiv();
+            div.appendChild(builtDiv);
+        }        
+    }
 }
 
-export default Task;
+export {Task, Project};
 
 /*Add button listener for when the user clicks to add a new project and appends the name of the project in the DOM as a new DIV*/
 const addButton = document.getElementById("add");
 const form = document.getElementById("project");
 const formSubmit = document.getElementById("submit");
+
 addButton.addEventListener("click", () => {
     form.style.display = "flex";
-    formSubmit.addEventListener("click", e => {
-        e.preventDefault();
-        form.style.display = "none";
-    })
+});
+
+formSubmit.addEventListener("click", e => {
+    e.preventDefault();
+    form.style.display = "none";
+
+    //Get the text content from the form
+    let projectName = document.getElementById("projectName").value;
+    let project = new Project(projectName);
+    project.displayProject();
 });
