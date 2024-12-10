@@ -60,6 +60,12 @@ class Project {
 
     /*Manipulates the DOM to show the particular project*/
     displayProject() {
+        //Make the add task button visible
+        const addTaskHeader = document.getElementsByClassName("addTask")[0];
+        const addTaskButton = document.getElementsByClassName("addTask")[1];
+        addTaskHeader.style.display = "block";
+        addTaskButton.style.display = "block";
+
         //Get the navigational panel so we can add a button for accessing the project
         const nav = document.getElementById("nav-panel");
         const projectButton = document.createElement("button");

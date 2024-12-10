@@ -54,7 +54,7 @@ h2 {
     text-align: center;
 }
 
-#createProject {
+#create {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -65,7 +65,7 @@ h2 {
     color: white;
 }
 
-#createProject button {
+#create button {
     width: 80%;
     height: 5%;
     font-size: 24px;
@@ -99,4 +99,8 @@ h2 {
 
 .projectTitle {
     color: white;
+}
+
+.addTask {
+    display: none;
 }
