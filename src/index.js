@@ -104,20 +104,27 @@ class Project {
 export {Task, Project};
 
 /*Add button listener for when the user clicks to add a new project and appends the name of the project in the DOM as a new DIV*/
-const addButton = document.getElementById("add");
-const form = document.getElementById("project");
-const formSubmit = document.getElementById("submit");
+const addProjectButton = document.getElementById("add");
+const projectForm = document.getElementById("project");
+const projectFormSubmit = document.getElementById("submit");
 
-addButton.addEventListener("click", () => {
-    form.style.display = "flex";
+addProjectButton.addEventListener("click", () => {
+    projectForm.style.display = "flex";
 });
 
-formSubmit.addEventListener("click", e => {
+projectFormSubmit.addEventListener("click", e => {
     e.preventDefault();
-    form.style.display = "none";
+    projectForm.style.display = "none";
 
     //Get the text content from the form
     let projectName = document.getElementById("projectName").value;
     let project = new Project(projectName);
     project.displayProject();
 });
+
+/*Add a button listener for when the user clicks to add a new task booting up a form for input*/
+const addTaskButton = document.getElementById("addTask");
+addTaskButton.addEventListener("click", () => {
+
+});
+
