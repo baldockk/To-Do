@@ -134,6 +134,13 @@ addTaskSubmit.addEventListener("click", e => {
     taskForm.style.display = "none";
 
     //Get the form inputs to create a new task object
+    let title = document.getElementById("taskTitle").value;
+    let description = document.getElementById("taskDescription").value;
+    let date = document.getElementById("taskDate").value;
+    let priority = document.querySelector('input[name="Priority"]:checked')?.value;
+
+    let task = new Task(title, description, date, priority);
+    
 
 })
 
