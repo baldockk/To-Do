@@ -73,7 +73,45 @@ class Task {
         //Get the current selected project so we can manipulate it's task array
         let currProject = projects[selectedProjectIndex];
        
-        
+        if(currProject){
+            const task = currProject.tasksArray[taskIndex];
+
+            //Populate form fields with current task data
+            document.getElementById("taskTitle").value = task.title;
+            document.getElementById("taskDescription").value = task.description;
+            document.getElementById("taskDate").value = task.dueDate;
+            document.querySelector(`input[name="Priority"][value="${task.priority}"]`).checked = true;
+    
+            //Show the form for editing
+            const taskForm = document.getElementById("task");
+            taskForm.style.display = "flex";
+    
+            //Add a temporary event listener for editing
+            const submitButton = document.getElementById("submitTask");
+            const handleEditSubmit = (e) => {
+                e.preventDefault();
+    
+                this.removeTask(taskIndex);
+
+                //Update the task with new values
+                task.title = document.getElementById("taskTitle").value;
+                task.description = document.getElementById("taskDescription").value;
+                task.dueDate = document.getElementById("taskDate").value;
+                task.priority = document.querySelector('input[name="Priority"]:checked')?.value;
+    
+                //Hide the form and update the displayed tasks
+                taskForm.style.display = "none";
+                const taskDiv = document.getElementById("content");
+                currProject.clearTaskContainer(taskDiv);
+                currProject.displayTasks(taskDiv);
+    
+                //Remove this listener after editing
+                submitButton.removeEventListener("click", handleEditSubmit);
+            };
+    
+            //Attach the event listener
+            submitButton.addEventListener("click", handleEditSubmit);
+        }
     }
 
     /*Allows the user to remove the task*/
