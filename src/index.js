@@ -16,7 +16,7 @@ class Task {
     }
 
     /*Creates the div which contains all of the task content and returns it to the project*/
-    buildTaskDiv() {
+    buildTaskDiv(taskIndex) {
         const newDiv = document.createElement("div");
         newDiv.classList.add("contentDiv");
         const title = document.createElement("h3");
@@ -34,7 +34,59 @@ class Task {
         newDiv.appendChild(dueDate);
         newDiv.appendChild(priority);
 
+        const buildDiv = this.buildButtonDiv(taskIndex);
+        newDiv.appendChild(buildDiv);
+
         return newDiv;
+    }
+
+    /*Builds the remove and edit buttons and returns them inside of a div with click events attached*/
+    buildButtonDiv(taskIndex) {
+        const buttonDiv = document.createElement("div");
+        buttonDiv.classList.add("taskButtonDiv");
+        const rmvButton = document.createElement("button");
+        rmvButton.textContent = "Delete";
+        rmvButton.id = "remove";
+        const editButton = document.createElement("button");
+        editButton.textContent = "Edit";
+        editButton.id = "edit";
+
+        //Add the event listeners
+        rmvButton.addEventListener("click", () => {
+            //Apply logic to remove the task
+            this.removeTask(taskIndex);
+        });
+
+        editButton.addEventListener("click", () => {
+            //Apply logic to modify the task item
+            this.editTask(taskIndex);
+        });
+
+        buttonDiv.appendChild(rmvButton);
+        buttonDiv.appendChild(editButton);
+
+        return buttonDiv;
+    }
+
+    /*Allows the user to edit the form and resubmit the task*/
+    editTask(taskIndex) {
+        //Get the current selected project so we can manipulate it's task array
+        let currProject = projects[selectedProjectIndex];
+       
+        
+    }
+
+    /*Allows the user to remove the task*/
+    removeTask(taskIndex) {
+        //Get the current selected project so we can manipulate it's task array
+        let currProject = projects[selectedProjectIndex];
+        
+        if (currProject) {
+            currProject.tasksArray.splice(taskIndex, 1); // Remove the task
+            const taskDiv = document.getElementById("content");
+            currProject.clearTaskContainer(taskDiv); // Clear and redisplay tasks
+            currProject.displayTasks(taskDiv);
+        }
     }
 }
 
@@ -102,7 +154,7 @@ class Project {
     /*Displays the tasks to the content div by first building the task DOM element*/
     displayTasks(div) {
         for(let i = 0; i < this.tasksArray.length; i++){
-            const builtDiv = this.tasksArray[i].buildTaskDiv();
+            const builtDiv = this.tasksArray[i].buildTaskDiv(i);
             div.appendChild(builtDiv);
         }        
     }
