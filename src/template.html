@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To Do List</title>
+    <script src="index.js" defer></script>
 </head>
 <body>
     <header>
@@ -22,7 +23,7 @@
             <input type="text" id="taskTitle" placeholder="Get Started" alt="put task title here" required name="Task Title">
 
             <label for="taskDescription">Describe Your Task:</label>
-            <textarea id="taskDescription" name="description" placeholder="describe your project..." cols="40" rows="8">
+            <textarea id="taskDescription" name="description" placeholder="describe your project..." cols="40" rows="8" required>
             </textarea>
 
             <label for="taskDate">Date Due:</label>
@@ -31,13 +32,13 @@
             <label>Priority</label>
             <div id="priority">
                 <label for="high">High</label>
-                <input type="radio" id="high" value="high" name="Priority">
+                <input type="radio" id="high" value="high" name="Priority" required>
 
                 <label for="medium">Medium</label>
-                <input type="radio" id="medium" value="medium" name="Priority">
+                <input type="radio" id="medium" value="medium" name="Priority" required>
 
                 <label for="low">Low</label>
-                <input type="radio" id="low" value="low" name="Priority">
+                <input type="radio" id="low" value="low" name="Priority" required>
             </div>
 
             <button type="submit" id="submitTask">Add Task To Project</button>

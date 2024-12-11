@@ -8,11 +8,12 @@ let selectedProjectIndex = null;
 
 /*Creates a task object for adding to each individual project*/
 class Task {
-    constructor(title, description, dueDate, priority) {
+    constructor(title, description, dueDate, priority, completed = false) {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
+        this.completed = completed;
     }
 
     /*Creates the div which contains all of the task content and returns it to the project*/
@@ -64,8 +65,25 @@ class Task {
 
         buttonDiv.appendChild(rmvButton);
         buttonDiv.appendChild(editButton);
+        this.addCheckBox(buttonDiv);
 
         return buttonDiv;
+    }
+
+    addCheckBox(div) {
+        const checkboxLabel = document.createElement("label");
+        checkboxLabel.textContent = "Completed?";
+        const checkBox = document.createElement("input");
+        checkBox.type = "checkbox";
+        checkBox.checked = this.completed; //Reflect current state
+
+        //Update the `completed` property when the checkbox state changes
+        checkBox.addEventListener("change", () => {
+            this.completed = checkBox.checked;
+        });
+
+        div.appendChild(checkboxLabel);
+        div.appendChild(checkBox);
     }
 
     /*Allows the user to edit the form and resubmit the task*/
@@ -91,6 +109,7 @@ class Task {
             const handleEditSubmit = (e) => {
                 e.preventDefault();
     
+                //Removes unwanted duplication
                 this.removeTask(taskIndex);
 
                 //Update the task with new values
@@ -225,6 +244,10 @@ const addTaskButton = document.getElementById("addTask");
 const taskForm = document.getElementById("task");
 addTaskButton.addEventListener("click", () => {
     taskForm.style.display = "flex";
+      //Clear form fields
+      document.getElementById("taskTitle").value = "";
+      document.getElementById("taskDescription").value = "";
+      document.getElementById("taskDate").value = "";
 });
 
 const addTaskSubmit = document.getElementById("submitTask");
@@ -257,9 +280,6 @@ addTaskSubmit.addEventListener("click", e => {
 /* 
 Functionality still to implement:
 
-1. Remove tasks from the project using button on div
-2. Remove an entire project? Not sure if I will inplement this yet.
-3. Edit to-do details using button on the div
-4. Change color of divs to match the priority: RED = High; YELLOW = Medium; GREEN = low;
-4. Use web storage API to allow the user to save this
+1. Change color of divs to match the priority: RED = High; YELLOW = Medium; GREEN = low;
+2. Use web storage API to allow the user to save this
 */
