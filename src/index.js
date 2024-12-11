@@ -123,6 +123,8 @@ class Task {
                 const taskDiv = document.getElementById("content");
                 currProject.clearTaskContainer(taskDiv);
                 currProject.displayTasks(taskDiv);
+
+                saveToLocalStorage(); // Save after editing a task
     
                 //Remove this listener after editing
                 submitButton.removeEventListener("click", handleEditSubmit);
@@ -143,6 +145,8 @@ class Task {
             const taskDiv = document.getElementById("content");
             currProject.clearTaskContainer(taskDiv); // Clear and redisplay tasks
             currProject.displayTasks(taskDiv);
+
+            saveToLocalStorage(); // Save after removing a task
         }
     }
 }
@@ -237,6 +241,8 @@ projectFormSubmit.addEventListener("click", e => {
     let project = new Project(projectName);
     project.displayProject();
     projects.push(project);
+
+    saveToLocalStorage(); // Save after adding a new project
 });
 
 /*Add a button listener for when the user clicks to add a new task booting up a form for input*/
@@ -272,14 +278,53 @@ addTaskSubmit.addEventListener("click", e => {
         const taskDiv = document.getElementById("content");
         selectedProject.clearTaskContainer(taskDiv);
         selectedProject.displayTasks(taskDiv);
+
+        saveToLocalStorage(); // Save after adding a new task
     } else {
         console.error("No project selected!");
     }
 });
 
-/* 
-Functionality still to implement:
-
-1. Change color of divs to match the priority: RED = High; YELLOW = Medium; GREEN = low;
-2. Use web storage API to allow the user to save this
+/*
+Step: Use web storage API to allow the user to save this
+Note: I had absolutely no idea how to do this... This is what ChatGPT says. Curriculum didn't show how this were to be done so I will use this project to reflect on
+how saving to local should be done
 */
+
+// Function to save projects to localStorage
+function saveToLocalStorage() {
+    const serializedProjects = JSON.stringify(projects);
+    localStorage.setItem("projects", serializedProjects);
+}
+
+// Function to load projects from localStorage
+function loadFromLocalStorage() {
+    const data = localStorage.getItem("projects");
+    if (data) {
+        const parsedProjects = JSON.parse(data);
+
+        // Convert plain objects back to Project and Task instances
+        parsedProjects.forEach(projectData => {
+            const project = new Project(projectData.name);
+
+            projectData.tasksArray.forEach(taskData => {
+                const task = new Task(
+                    taskData.title,
+                    taskData.description,
+                    taskData.dueDate,
+                    taskData.priority,
+                    taskData.completed
+                );
+                project.setTask(task);
+            });
+
+            projects.push(project);
+            project.displayProject(); // Rebuild the UI for the project
+        });
+    }
+}
+
+// Call loadFromLocalStorage when the app is first loaded
+document.addEventListener("DOMContentLoaded", () => {
+    loadFromLocalStorage();
+});
