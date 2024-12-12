@@ -5,7 +5,6 @@ const projects = [];
 //Global variable to track the currently selected project
 let selectedProjectIndex = null;
 
-
 /*Creates a task object for adding to each individual project*/
 class Task {
     constructor(title, description, dueDate, priority, completed = false) {
@@ -25,11 +24,34 @@ class Task {
         const dueDate = document.createElement("p");
         const priority = document.createElement("h4");
 
-        title.textContent = this.title;
-        description.textContent = this.description;
-        dueDate.textContent = this.dueDate;
-        priority.textContent = this.priority;
+        if(this.title != ""){
+            title.textContent = this.title;
+        } else{
+            title.textContent = "undefined";
+        }
+        
+        if(this.description != ""){
+            description.textContent = this.description;
+        } else{
+            description.textContent = "undefined";
+        }
 
+        if(this.dueDate != ""){
+             dueDate.textContent = this.dueDate;
+        } else{
+            //https://www.freecodecamp.org/news/javascript-get-current-date-todays-date-in-js/
+            let date = new Date().toLocaleDateString();
+            dueDate.textContent = date;
+        }
+    
+        if(this.priority != undefined){
+            priority.textContent = this.priority;
+        } else{
+            priority.textContent = "low";
+            const radioLow = document.getElementById("low");
+            radioLow.checked = true;
+        }
+        
         newDiv.appendChild(title);
         newDiv.appendChild(description);
         newDiv.appendChild(dueDate);
